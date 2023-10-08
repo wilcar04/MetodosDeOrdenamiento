@@ -92,15 +92,16 @@ class Modelo:
             k += 1
 
     @staticmethod
-    def merge_sort(array: List[int], left: int, right: int) -> List[int]:
-        if left < right:
-            middle = left + (right - left) // 2
+    def merge_sort(array: List[int]) -> List[int]:
+        def _merge_sort(array: List[int], left: int, right: int) -> None:
+            if left < right:
+                middle = left + (right - left) // 2
 
-            Modelo.merge_sort(array, left, middle)
-            Modelo.merge_sort(array, middle + 1, right)
-            Modelo.merge(array, left, middle, right)
+                _merge_sort(array, left, middle)
+                _merge_sort(array, middle + 1, right)
+                Modelo.merge(array, left, middle, right)
 
-
+        _merge_sort(array, 0, len(array) - 1)
         return array
 
     @staticmethod
@@ -140,35 +141,29 @@ class Modelo:
 
     @staticmethod
     def counting_sort(array: List[int]) -> List[int]:
-        size = len(array)
-        output = [0] * size
+        # Encuentra el mínimo y el máximo en el array para determinar el rango
+        min_val = min(array)
+        max_val = max(array)
+        range_val = max_val - min_val + 1
 
-        # Inicializar el array de conteo
-        count = [0] * 10
+        # Inicializa el array de conteo y el array de salida
+        count = [0] * range_val
+        output = [0] * len(array)
 
-        # Almacenar el conteo de cada elemento en el array de conteo
-        for i in range(size):
-            count[array[i]] += 1
+        # Almacena el conteo de cada elemento en el array de conteo
+        for num in array:
+            count[num - min_val] += 1
 
-        # Almacenar el conteo acumulativo
-        for i in range(1, 10):
+        # Almacena el conteo acumulativo
+        for i in range(1, len(count)):
             count[i] += count[i - 1]
 
-        # Encontrar el índice de cada elemento del array original en el array de conteo
-        # colocar los elementos en el array de salida
-        i = size - 1
-        while i >= 0:
-            output[count[array[i]] - 1] = array[i]
-            count[array[i]] -= 1
-            i -= 1
+        # Coloca los elementos en el array de salida en orden
+        for num in reversed(array):
+            output[count[num - min_val] - 1] = num
+            count[num - min_val] -= 1
 
-        # Copiar los elementos ordenados al array original
-        for i in range(size):
-            array[i] = output[i]
-
-
-        return array
-
+        return output
 
     @staticmethod
     def counting_sort_for_radix(array: List[int], digit_place: int) -> None:
