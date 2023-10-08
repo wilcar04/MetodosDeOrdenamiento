@@ -18,8 +18,8 @@ class GestorDataFrame:
         self.columna_objetivo = self._DATA[columna].astype(int).tolist()
         return self.columna_objetivo
 
-    def imprimir_todos_los_datos(self) -> None:
-        print(self._DATA)
+    def imprimir_todos_los_datos(self) -> DataFrame:
+        return self._DATA
 
     def imprimir_datos_de_columna(self, columna: str) -> None:
         print(self._DATA[columna])
