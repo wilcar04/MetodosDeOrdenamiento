@@ -23,10 +23,6 @@ ASSETS_PATH = CURRENT_PATH / "assets" / "frame0"
 def relative_to_assets(path: str) -> str:
     return os.path.join(ASSETS_PATH, path)
 
-
-
-
-
 Link_datos = None
 Analizar_columna = None
 link_almacenado = None
@@ -279,8 +275,8 @@ class Vista:
         )
 
         canvas.create_text(
-            188.0,
-            288.0,
+            200,
+            347.5,
             anchor="nw",
             text="Columna a ordenar",
             fill="#7C838A",
@@ -313,6 +309,24 @@ class Vista:
             image=entry_image_1
         )
 
+        def on_button_click(self):
+            link_almacenado = Link_datos.get()
+            # Lógica para manejar el clic del botón y el enlace almacenado
+
+            # Obtiene el DataFrame como una cadena
+            gestor = GestorDataFrame(link_almacenado)
+            columna_almacenada = gestor.obtener_lista_de_columna(Analizar_columna.get())
+            df_str = str(gestor.imprimir_todos_los_datos())
+
+            # Crea una nueva ventana
+            new_window = Toplevel()
+            new_window.title("DataFrame")
+
+            # Crea un widget Text y añade el DataFrame
+            text_widget = Text(new_window)
+            text_widget.insert("end", df_str)
+            text_widget.pack()
+
         global Link_datos
         Link_datos = Entry(
             bd=0,
@@ -320,6 +334,7 @@ class Vista:
             fg="#000716",
             highlightthickness=0
         )
+
         Link_datos.place(
             x=199.0,
             y=227.0,
@@ -327,11 +342,22 @@ class Vista:
             height=33.0
         )
 
+        button_image = PhotoImage(file=relative_to_assets("button_columnas.png"))
+        Submit_button = Button(
+            image=button_image,
+            borderwidth=0,
+            highlightthickness=0,
+            command= on_button_click,
+            relief="flat"
+        )
+        Submit_button.place(x=212.0, y=267.0, width=289.0, height=67.0)
+
+
         entry_image_2 = PhotoImage(
             file=relative_to_assets("entry_2.png"))
         entry_bg_2 = canvas.create_image(
-            361.5,
-            347.5,
+            361.0,
+            390.0,
             image=entry_image_2
         )
 
@@ -344,7 +370,7 @@ class Vista:
         )
         Analizar_columna.place(
             x=199.0,
-            y=330.0,
+            y=375.0,
             width=325.0,
             height=33.0
         )
@@ -375,6 +401,7 @@ class Vista:
             text_widget.insert("end", df_str)
             text_widget.pack()
 
+
         button_image_6 = PhotoImage(
             file=relative_to_assets("button_6.png"))
         Submit_button = Button(
@@ -386,12 +413,16 @@ class Vista:
         )
         Submit_button.place(
             x=216.0,
-            y=393.0,
+            y=415.0,
             width=289.0,
             height=67.0
         )
         window.resizable(False, False)
         window.mainloop()
+
+
+
+
 
 
 mi_vista = Vista()
