@@ -309,22 +309,18 @@ class Vista:
             image=entry_image_1
         )
 
-        def on_button_click(self):
+        def mostrar_columnas():
+            global link_almacenado
             link_almacenado = Link_datos.get()
-            # Lógica para manejar el clic del botón y el enlace almacenado
-
-            # Obtiene el DataFrame como una cadena
             gestor = GestorDataFrame(link_almacenado)
-            columna_almacenada = gestor.obtener_lista_de_columna(Analizar_columna.get())
-            df_str = str(gestor.imprimir_todos_los_datos())
 
-            # Crea una nueva ventana
+            df = gestor.imprimir_todos_los_datos()
+
             new_window = Toplevel()
-            new_window.title("DataFrame")
+            new_window.title("Resultado del Análisis")
 
-            # Crea un widget Text y añade el DataFrame
             text_widget = Text(new_window)
-            text_widget.insert("end", df_str)
+            text_widget.insert("end", df.to_string(index=False))
             text_widget.pack()
 
         global Link_datos
@@ -347,7 +343,7 @@ class Vista:
             image=button_image,
             borderwidth=0,
             highlightthickness=0,
-            command= on_button_click,
+            command= mostrar_columnas,
             relief="flat"
         )
         Submit_button.place(x=212.0, y=267.0, width=289.0, height=67.0)
