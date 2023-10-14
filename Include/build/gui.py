@@ -8,11 +8,8 @@ from pathlib import Path
 # Explicit imports to satisfy Flake8
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 from Include import modelo
-from Include.modelo import Modelo
-from Include.gestor import GestorDataFrame
 import time
 from tkinter import Tk, PhotoImage
-
 
 
 CURRENT_PATH = Path(__file__).parent
@@ -24,11 +21,6 @@ def relative_to_assets(path: str) -> str:
     return os.path.join(ASSETS_PATH, path)
 
 
-
-
-
-Link_datos = None
-Analizar_columna = None
 link_almacenado = None
 columna_almacenada = None
 
@@ -390,6 +382,7 @@ class Vista:
             width=289.0,
             height=67.0
         )
+
         window.resizable(False, False)
         window.mainloop()
 

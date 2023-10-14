@@ -206,5 +206,4 @@ class Modelo:
             Modelo.counting_sort_for_radix(array, digit_place)
             digit_place *= 10
 
-
         return array
